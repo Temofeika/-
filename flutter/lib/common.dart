@@ -250,17 +250,17 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
 class MyTheme {
   MyTheme._();
 
-  static const Color grayBg = Color(0xFFEFEFF2);
-  static const Color accent = Color(0xFF0071FF);
-  static const Color accent50 = Color(0x770071FF);
-  static const Color accent80 = Color(0xAA0071FF);
+  static const Color grayBg = Color(0xFFF0F2F5);
+  static const Color accent = Color(0xFF6366F1); // Indigo
+  static const Color accent50 = Color(0x776366F1);
+  static const Color accent80 = Color(0xAA6366F1);
   static const Color canvasColor = Color(0xFF212121);
-  static const Color border = Color(0xFFCCCCCC);
-  static const Color idColor = Color(0xFF00B6F0);
+  static const Color border = Color(0xFFD1D5DB);
+  static const Color idColor = Color(0xFF8B5CF6); // Violet
   static const Color darkGray = Color.fromARGB(255, 148, 148, 148);
   static const Color cmIdColor = Color(0xFF21790B);
   static const Color dark = Colors.black87;
-  static const Color button = Color(0xFF2C8CFF);
+  static const Color button = Color(0xFF4F46E5); // Deep Indigo
   static const Color hoverBorder = Color(0xFF999999);
 
   // ListTile

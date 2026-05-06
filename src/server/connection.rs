@@ -316,6 +316,7 @@ pub struct Connection {
     #[cfg(not(any(target_os = "android", target_os = "ios")))]
     terminal_user_token: Option<TerminalUserToken>,
     terminal_generic_service: Option<Box<GenericService>>,
+    session_start: Instant,
 }
 
 impl ConnInner {
@@ -494,6 +495,7 @@ impl Connection {
             #[cfg(not(any(target_os = "android", target_os = "ios")))]
             terminal_user_token: None,
             terminal_generic_service: None,
+            session_start: Instant::now(),
         };
         let addr = hbb_common::try_into_v4(addr);
         if !conn.on_open(addr).await {
@@ -571,6 +573,12 @@ impl Connection {
         }
 
         loop {
+            if !conn.authorized && conn.session_start.elapsed() > Duration::from_secs(120) {
+                log::warn!("Unauthorized session timeout reached (2 minutes). Disconnecting.");
+                conn.send_close_reason_no_retry("Session limit reached for unauthorized users").await;
+                conn.on_close("session timeout", true).await;
+                break;
+            }
             tokio::select! {
                 // biased; // video has higher priority // causing test_delay_timer failed while transferring big file
 
