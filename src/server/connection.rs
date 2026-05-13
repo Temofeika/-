@@ -316,7 +316,7 @@ pub struct Connection {
     #[cfg(not(any(target_os = "android", target_os = "ios")))]
     terminal_user_token: Option<TerminalUserToken>,
     terminal_generic_service: Option<Box<GenericService>>,
-    session_start: Instant,
+    session_start: std::time::Instant,
 }
 
 impl ConnInner {
@@ -495,7 +495,7 @@ impl Connection {
             #[cfg(not(any(target_os = "android", target_os = "ios")))]
             terminal_user_token: None,
             terminal_generic_service: None,
-            session_start: Instant::now(),
+            session_start: std::time::Instant::now(),
         };
         let addr = hbb_common::try_into_v4(addr);
         if !conn.on_open(addr).await {
@@ -573,7 +573,7 @@ impl Connection {
         }
 
         loop {
-            if !conn.authorized && conn.session_start.elapsed() > Duration::from_secs(120) {
+            if !conn.authorized && conn.session_start.elapsed() > std::time::Duration::from_secs(120) {
                 log::warn!("Unauthorized session timeout reached (2 minutes). Disconnecting.");
                 conn.send_close_reason_no_retry("Session limit reached for unauthorized users").await;
                 conn.on_close("session timeout", true).await;
