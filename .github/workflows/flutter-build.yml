@@ -186,12 +186,12 @@ jobs:
 
             # Check and move the files
             $checksum_driver = (Select-String -Path .\sha256sums -Pattern '^([a-fA-F0-9]{64}) \*teamdesk_printer_driver_v4-1.4\.zip$').Matches.Groups[1].Value
-            $downloadsum_driver = Get-FileHash -Path teamdesk_printer_driver_v4-1.4.zip -Algorithm SHA256
+            $downloadsum_driver = Get-FileHash -Path rustdesk_printer_driver_v4-1.4.zip -Algorithm SHA256
             $checksum_adapter = (Select-String -Path .\sha256sums -Pattern '^([a-fA-F0-9]{64}) \*printer_driver_adapter\.zip$').Matches.Groups[1].Value
             $downloadsum_adapter = Get-FileHash -Path printer_driver_adapter.zip -Algorithm SHA256
             if ($checksum_driver -eq $downloadsum_driver.Hash -and $checksum_adapter -eq $downloadsum_adapter.Hash) {
                 Write-Output "teamdesk_printer_driver_v4-1.4, checksums match, extract the file."
-                Expand-Archive teamdesk_printer_driver_v4-1.4.zip -DestinationPath .
+                Expand-Archive rustdesk_printer_driver_v4-1.4.zip -DestinationPath .
                 mkdir ./teamdesk/drivers
                 mv -Force .\teamdesk_printer_driver_v4-1.4 ./teamdesk/drivers/TeamDeskPrinterDriver
                 Expand-Archive printer_driver_adapter.zip -DestinationPath .
@@ -316,7 +316,7 @@ jobs:
           submodules: recursive
 
       - name: Install LLVM and Clang
-        uses: teamdesk-org/install-llvm-action-32bit@master
+        uses: rustdesk-org/install-llvm-action-32bit@master
         with:
           version: ${{ env.LLVM_VERSION }}
 
@@ -1411,7 +1411,7 @@ jobs:
           name: bridge-artifact
           path: ./
 
-      - uses: teamdesk-org/run-on-arch-action@amd64-support
+      - uses: rustdesk-org/run-on-arch-action@amd64-support
         name: Build teamdesk
         id: vcpkg
         if: matrix.job.arch == 'x86_64' || env.UPLOAD_ARTIFACT == 'true'
@@ -1613,7 +1613,7 @@ jobs:
 
       - name: Build archlinux package
         if: matrix.job.arch == 'x86_64' && env.UPLOAD_ARTIFACT == 'true'
-        uses: teamdesk-org/arch-makepkg-action@master
+        uses: rustdesk-org/arch-makepkg-action@master
         with:
           packages:
           scripts: |
@@ -1695,7 +1695,7 @@ jobs:
           RUST_TOOLCHAIN_VERSION=$(cargo --version | awk '{print $2}')
           echo "RUST_TOOLCHAIN_VERSION=$RUST_TOOLCHAIN_VERSION" >> $GITHUB_ENV
 
-      - uses: teamdesk-org/run-on-arch-action@amd64-support
+      - uses: rustdesk-org/run-on-arch-action@amd64-support
         name: Build teamdesk sciter binary for ${{ matrix.job.arch }}
         id: vcpkg
         with:
@@ -1955,7 +1955,7 @@ jobs:
         run: |
           mv teamdesk-${{ env.VERSION }}-${{ matrix.job.arch }}${{ matrix.job.suffix }}.deb flatpak/teamdesk.deb
 
-      - uses: teamdesk-org/run-on-arch-action@amd64-support
+      - uses: rustdesk-org/run-on-arch-action@amd64-support
         name: Build teamdesk flatpak package for ${{ matrix.job.arch }}
         id: flatpak
         with:
