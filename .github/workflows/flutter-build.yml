@@ -180,7 +180,7 @@ jobs:
 
           # Download printer driver files and extract them to ./teamdesk
           try {
-            Invoke-WebRequest -Uri https://github.com/rustdesk/hbb_common/releases/download/driver/teamdesk_printer_driver_v4-1.4.zip -OutFile teamdesk_printer_driver_v4-1.4.zip
+            Invoke-WebRequest -Uri https://github.com/rustdesk/hbb_common/releases/download/driver/rustdesk_printer_driver_v4-1.4.zip -OutFile rustdesk_printer_driver_v4-1.4.zip
             Invoke-WebRequest -Uri https://github.com/rustdesk/hbb_common/releases/download/driver/printer_driver_adapter.zip -OutFile printer_driver_adapter.zip
             Invoke-WebRequest -Uri https://github.com/rustdesk/hbb_common/releases/download/driver/sha256sums -OutFile sha256sums
 
@@ -546,7 +546,7 @@ jobs:
 
       # - name: Publish ipa package
       #   # if: env.ANDROID_SIGNING_KEY != null && env.UPLOAD_ARTIFACT == 'true'
-      #   uses: softprops/action-gh-release@v1
+      #   uses: softprops/action-gh-release@v2
       #   with:
       #     prerelease: true
       #     tag_name: ${{ env.TAG_NAME }}
@@ -2023,7 +2023,7 @@ jobs:
           cd $(dirname $(dirname $(which flutter)))
           [[ "3.24.5" == ${{env.FLUTTER_VERSION}} ]] && git apply ${{ github.workspace }}/.github/patches/flutter_3.24.4_dropdown_menu_enableFilter.diff
 
-      # https://teamdesk.com/docs/en/dev/build/web/
+      # https://rustdesk.com/docs/en/dev/build/web/
       - name: Build web
         shell: bash
         run: |
@@ -2039,7 +2039,7 @@ jobs:
           popd
 
           pushd flutter/web
-          wget https://github.com/rustdesk/doc.teamdesk.com/releases/download/console/web_deps.tar.gz
+          wget https://github.com/rustdesk/doc.rustdesk.com/releases/download/console/web_deps.tar.gz
           tar xzf web_deps.tar.gz
           popd
 

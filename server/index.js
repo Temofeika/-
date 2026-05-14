@@ -40,7 +40,7 @@ function saveDb(db) {
     fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2));
 }
 
-// Required for TeamDesk client to detect server status
+// Required for RustDesk client to detect server status
 app.get('/api/login-options', (req, res) => {
     res.json({
         oidc: false,

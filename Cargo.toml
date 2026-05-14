@@ -1,7 +1,7 @@
 [package]
 name = "teamdesk"
 version = "1.4.6"
-authors = ["teamdesk <info@teamdesk.com>"]
+authors = ["rustdesk <info@rustdesk.com>"]
 edition = "2021"
 build= "build.rs"
 description = "TeamDesk Remote Desktop"
@@ -9,7 +9,7 @@ default-run = "teamdesk"
 rust-version = "1.75"
 
 [lib]
-name = "libteamdesk"
+name = "librustdesk"
 crate-type = ["cdylib", "staticlib", "rlib"]
 
 [[bin]]
@@ -99,7 +99,7 @@ ctrlc = "3.2"
 # arboard = { version = "3.4", features = ["wayland-data-control"] }
 arboard = { git = "https://github.com/rustdesk-org/arboard", features = ["wayland-data-control"] }
 clipboard-master = { git = "https://github.com/rustdesk-org/clipboard-master" }
-portable-pty = { git = "https://github.com/rustdesk-org/wezterm", branch = "teamdesk/pty_based_0.8.1", package = "portable-pty" }
+portable-pty = { git = "https://github.com/rustdesk-org/wezterm", branch = "rustdesk/pty_based_0.8.1", package = "portable-pty" }
 
 system_shutdown = "4.0"
 qrcode-generator = "4.1"
