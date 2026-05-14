@@ -1,0 +1,58 @@
+import os
+import re
+
+files_to_process = [
+    '.github/workflows/flutter-build.yml',
+    '.github/workflows/ci.yml',
+    '.github/workflows/flutter-tag.yml',
+    '.github/workflows/fdroid.yml',
+    '.github/workflows/playground.yml',
+    'build.py',
+    'Cargo.toml',
+    'libs/hbb_common/src/config.rs',
+    'flutter/pubspec.yaml',
+    'flutter/lib/models/native_model.dart',
+    'flutter/lib/common.dart',
+    'res/PKGBUILD',
+    'res/rpm.spec',
+    'res/rpm-suse.spec',
+    'res/teamdesk.service',
+    'res/teamdesk.desktop',
+    'res/teamdesk-link.desktop',
+    'res/pam.d/teamdesk.debian',
+    'res/pacman_install',
+    'libs/portable/generate.py',
+    'libs/portable/Cargo.toml'
+]
+
+def replace_rustdesk(content):
+    def replacer(match):
+        word = match.group(0)
+        if word == 'RustDesk': return 'TeamDesk'
+        if word == 'rustdesk': return 'teamdesk'
+        if word == 'RUSTDESK': return 'TEAMDESK'
+        return word
+
+    new_content = re.sub(r'\b[Rr]ust[Dd]esk\b', replacer, content)
+    new_content = re.sub(r'rustdesk', 'teamdesk', new_content)
+    new_content = re.sub(r'RustDesk', 'TeamDesk', new_content)
+    
+    new_content = new_content.replace('github.com/teamdesk/teamdesk', 'github.com/rustdesk/rustdesk')
+    new_content = new_content.replace('github.com/teamdesk/', 'github.com/rustdesk/')
+    new_content = new_content.replace('github.com/teamdesk-org/', 'github.com/rustdesk-org/')
+    
+    return new_content
+
+for file_path in files_to_process:
+    if not os.path.exists(file_path):
+        continue
+    
+    with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+        content = f.read()
+    
+    new_content = replace_rustdesk(content)
+    
+    if new_content != content:
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(new_content)
+        print(f"Processed {file_path}")

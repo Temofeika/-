@@ -182,7 +182,7 @@ def generate_build_script_for_docker():
             vcpkg/bootstrap-vcpkg.sh
             popd
             $VCPKG_ROOT/vcpkg install --x-install-root="$VCPKG_ROOT/installed"
-            # build rustdesk
+            # build teamdesk
             ./build.py --flutter --hwcodec
         ''')
     system2("chmod +x /tmp/build.sh")
@@ -297,7 +297,7 @@ Section: net
 Priority: optional
 Version: %s
 Architecture: %s
-Maintainer: teamdesk <info@rustdesk.com>
+Maintainer: teamdesk <info@teamdesk.com>
 Homepage: https://teamdesk.com
 Depends: libgtk-3-0, libxcb-randr0, libxdo3 | libxdo4, libxfixes3, libxcb-shape0, libxcb-xfixes0, libasound2, libsystemd0, curl, libva2, libva-drm2, libva-x11-2, libgstreamer-plugins-base1.0-0, libpam0g, gstreamer1.0-pipewire%s
 Recommends: libayatana-appindicator3-1
@@ -414,8 +414,8 @@ def build_flutter_dmg(version, features):
     system2('cp -rf ../target/release/service ./build/macos/Build/Products/Release/TeamDesk.app/Contents/MacOS/')
     '''
     system2(
-        "create-dmg --volname \"RustDesk Installer\" --window-pos 200 120 --window-size 800 400 --icon-size 100 --app-drop-link 600 185 --icon TeamDesk.app 200 190 --hide-extension TeamDesk.app rustdesk.dmg ./build/macos/Build/Products/Release/TeamDesk.app")
-    os.rename("rustdesk.dmg", f"../teamdesk-{version}.dmg")
+        "create-dmg --volname \"TeamDesk Installer\" --window-pos 200 120 --window-size 800 400 --icon-size 100 --app-drop-link 600 185 --icon TeamDesk.app 200 190 --hide-extension TeamDesk.app teamdesk.dmg ./build/macos/Build/Products/Release/TeamDesk.app")
+    os.rename("teamdesk.dmg", f"../teamdesk-{version}.dmg")
     '''
     os.chdir("..")
 
@@ -497,7 +497,7 @@ def main():
             return
         system2('cargo build --release --features ' + features)
         # system2('upx.exe target/release/teamdesk.exe')
-        system2('mv target/release/teamdesk.exe target/release/RustDesk.exe')
+        system2('mv target/release/teamdesk.exe target/release/TeamDesk.exe')
         pa = os.environ.get('P')
         if pa:
             # https://certera.com/kb/tutorial-guide-for-safenet-authentication-client-for-code-signing/
@@ -507,7 +507,7 @@ def main():
         else:
             print('Not signed')
         system2(
-            f'cp -rf target/release/RustDesk.exe {res_dir}')
+            f'cp -rf target/release/TeamDesk.exe {res_dir}')
         os.chdir('libs/portable')
         system2('pip3 install -r requirements.txt')
         system2(
@@ -524,7 +524,7 @@ def main():
             system2('strip target/release/teamdesk')
             system2('ln -s res/pacman_install && ln -s res/PKGBUILD')
             system2('HBB=`pwd` makepkg -f')
-        system2('mv rustdesk-%s-0-x86_64.pkg.tar.zst rustdesk-%s-manjaro-arch.pkg.tar.zst' % (
+        system2('mv teamdesk-%s-0-x86_64.pkg.tar.zst teamdesk-%s-manjaro-arch.pkg.tar.zst' % (
             version, version))
         # pacman -U ./teamdesk.pkg.tar.zst
     elif os.path.isfile('/usr/bin/yum'):
@@ -536,7 +536,7 @@ def main():
         system2(
             'mv $HOME/rpmbuild/RPMS/x86_64/teamdesk-%s-0.x86_64.rpm ./teamdesk-%s-fedora28-centos8.rpm' % (
                 version, version))
-        # yum localinstall rustdesk.rpm
+        # yum localinstall teamdesk.rpm
     elif os.path.isfile('/usr/bin/zypper'):
         system2('cargo build --release --features ' + features)
         system2('strip target/release/teamdesk')
@@ -546,7 +546,7 @@ def main():
         system2(
             'mv $HOME/rpmbuild/RPMS/x86_64/teamdesk-%s-0.x86_64.rpm ./teamdesk-%s-suse.rpm' % (
                 version, version))
-        # yum localinstall rustdesk.rpm
+        # yum localinstall teamdesk.rpm
     else:
         if flutter:
             if osx:
@@ -578,9 +578,9 @@ def main():
     codesign -s "Developer ID Application: {0}" --force --options runtime  ./target/release/bundle/osx/TeamDesk.app
     '''.format(pa))
                 system2(
-                    'create-dmg "RustDesk %s.dmg" "target/release/bundle/osx/TeamDesk.app"' % version)
-                os.rename('RustDesk %s.dmg' %
-                          version, 'rustdesk-%s.dmg' % version)
+                    'create-dmg "TeamDesk %s.dmg" "target/release/bundle/osx/TeamDesk.app"' % version)
+                os.rename('TeamDesk %s.dmg' %
+                          version, 'teamdesk-%s.dmg' % version)
                 if pa:
                     system2('''
     # https://pyoxidizer.readthedocs.io/en/apple-codesign-0.14.0/apple_codesign.html
@@ -592,7 +592,7 @@ def main():
     # https://appstoreconnect.apple.com/access/api
     # https://gregoryszorc.com/docs/apple-codesign/stable/apple_codesign_getting_started.html#apple-codesign-app-store-connect-api-key
     # p8 file is generated when you generate api key (can download only once)
-    rcodesign notary-submit --api-key-path ../.p12/api-key.json  --staple rustdesk-{1}.dmg
+    rcodesign notary-submit --api-key-path ../.p12/api-key.json  --staple teamdesk-{1}.dmg
     # verify:  spctl -a -t exec -v /Applications/TeamDesk.app
     '''.format(pa, version))
                 else:
@@ -628,7 +628,7 @@ def main():
                 system2('cp libsciter-gtk.so tmpdeb/usr/share/teamdesk/')
                 md5_file_folder("tmpdeb/")
                 system2('dpkg-deb -b tmpdeb teamdesk.deb; /bin/rm -rf tmpdeb/')
-                os.rename('teamdesk.deb', 'rustdesk-%s.deb' % version)
+                os.rename('teamdesk.deb', 'teamdesk-%s.deb' % version)
 
 
 def md5_file(fn):
