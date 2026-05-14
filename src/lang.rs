@@ -190,25 +190,25 @@ pub fn translate_locale(name: String, locale: &str) -> String {
         if let Some(value) = placeholder_value.as_ref() {
             s = s.replace("{}", &value);
         }
-        if !crate::is_rustdesk() {
-            if s.contains("RustDesk")
-                && !name.starts_with("upgrade_rustdesk_server_pro")
+        if !crate::is_teamdesk() {
+            if s.contains("TeamDesk")
+                && !name.starts_with("upgrade_teamdesk_server_pro")
                 && name != "powered_by_me"
             {
                 let app_name = crate::get_app_name();
-                if !app_name.contains("RustDesk") {
-                    s = s.replace("RustDesk", &app_name);
+                if !app_name.contains("TeamDesk") {
+                    s = s.replace("TeamDesk", &app_name);
                 } else {
                     // https://github.com/rustdesk/rustdesk-server-pro/issues/845
-                    // If app_name contains "RustDesk" (e.g., "RustDesk-Admin"), we need to avoid
-                    // replacing "RustDesk" within the already-substituted app_name, which would
-                    // cause duplication like "RustDesk-Admin" -> "RustDesk-Admin-Admin".
+                    // If app_name contains "TeamDesk" (e.g., "TeamDesk-Admin"), we need to avoid
+                    // replacing "TeamDesk" within the already-substituted app_name, which would
+                    // cause duplication like "TeamDesk-Admin" -> "TeamDesk-Admin-Admin".
                     //
                     // app_name only contains alphanumeric and hyphen.
                     const PLACEHOLDER: &str = "#A-P-P-N-A-M-E#";
                     if !s.contains(PLACEHOLDER) {
                         s = s.replace(&app_name, PLACEHOLDER);
-                        s = s.replace("RustDesk", &app_name);
+                        s = s.replace("TeamDesk", &app_name);
                         s = s.replace(PLACEHOLDER, &app_name);
                     } else {
                         // It's very unlikely to reach here.

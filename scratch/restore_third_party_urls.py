@@ -12,7 +12,7 @@ files_to_process = [
 
 def restore_urls(content):
     # Restore specific repository names that were incorrectly renamed
-    new_content = content.replace('github.com/rustdesk-org/TeamDeskTempTopMostWindow', 'github.com/rustdesk-org/RustDeskTempTopMostWindow')
+    new_content = content.replace('github.com/rustdesk-org/TeamDeskTempTopMostWindow', 'github.com/rustdesk-org/TeamDeskTempTopMostWindow')
     new_content = new_content.replace('github.com/rustdesk/TeamDesk', 'github.com/rustdesk/rustdesk') # Just in case
     return new_content
 
