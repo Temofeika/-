@@ -1,4 +1,6 @@
 name: CI
+permissions:
+  contents: write
 
 env:
 #   MIN_SUPPORTED_RUST_VERSION: "1.46.0"
