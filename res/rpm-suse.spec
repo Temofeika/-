@@ -28,8 +28,8 @@ mkdir -p %{buildroot}/usr/share/icons/hicolor/scalable/apps/
 install -m 755 $HBB/target/release/teamdesk %{buildroot}/usr/bin/teamdesk
 install $HBB/libsciter-gtk.so %{buildroot}/usr/share/teamdesk/libsciter-gtk.so
 install $HBB/res/teamdesk.service %{buildroot}/usr/share/teamdesk/files/
-install $HBB/res/128x128@2x.png %{buildroot}/usr/share/icons/hicolor/256x256/apps/teamdesk.png
-install $HBB/res/scalable.svg %{buildroot}/usr/share/icons/hicolor/scalable/apps/teamdesk.svg
+install $HBB/res/teamdesk.png %{buildroot}/usr/share/icons/hicolor/256x256/apps/teamdesk.png
+install $HBB/res/teamdesk.svg %{buildroot}/usr/share/icons/hicolor/scalable/apps/teamdesk.svg
 install $HBB/res/teamdesk.desktop %{buildroot}/usr/share/teamdesk/files/
 install $HBB/res/teamdesk-link.desktop %{buildroot}/usr/share/teamdesk/files/
 

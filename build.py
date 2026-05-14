@@ -336,9 +336,9 @@ def build_flutter_deb(version, features):
     system2(
         'cp ../res/teamdesk.service tmpdeb/usr/share/teamdesk/files/systemd/')
     system2(
-        'cp ../res/128x128@2x.png tmpdeb/usr/share/icons/hicolor/256x256/apps/teamdesk.png')
+        'cp ../res/teamdesk.png tmpdeb/usr/share/icons/hicolor/256x256/apps/teamdesk.png')
     system2(
-        'cp ../res/scalable.svg tmpdeb/usr/share/icons/hicolor/scalable/apps/teamdesk.svg')
+        'cp ../res/teamdesk.svg tmpdeb/usr/share/icons/hicolor/scalable/apps/teamdesk.svg')
     system2(
         'cp ../res/teamdesk.desktop tmpdeb/usr/share/applications/teamdesk.desktop')
     system2(
@@ -379,9 +379,9 @@ def build_deb_from_folder(version, binary_folder):
     system2(
         'cp ../res/teamdesk.service tmpdeb/usr/share/teamdesk/files/systemd/')
     system2(
-        'cp ../res/128x128@2x.png tmpdeb/usr/share/icons/hicolor/256x256/apps/teamdesk.png')
+        'cp ../res/teamdesk.png tmpdeb/usr/share/icons/hicolor/256x256/apps/teamdesk.png')
     system2(
-        'cp ../res/scalable.svg tmpdeb/usr/share/icons/hicolor/scalable/apps/teamdesk.svg')
+        'cp ../res/teamdesk.svg tmpdeb/usr/share/icons/hicolor/scalable/apps/teamdesk.svg')
     system2(
         'cp ../res/teamdesk.desktop tmpdeb/usr/share/applications/teamdesk.desktop')
     system2(
@@ -608,9 +608,9 @@ def main():
                 system2(
                     'cp res/teamdesk.service tmpdeb/usr/share/teamdesk/files/systemd/')
                 system2(
-                    'cp res/128x128@2x.png tmpdeb/usr/share/icons/hicolor/256x256/apps/teamdesk.png')
+                    'cp res/teamdesk.png tmpdeb/usr/share/icons/hicolor/256x256/apps/teamdesk.png')
                 system2(
-                    'cp res/scalable.svg tmpdeb/usr/share/icons/hicolor/scalable/apps/teamdesk.svg')
+                    'cp res/teamdesk.svg tmpdeb/usr/share/icons/hicolor/scalable/apps/teamdesk.svg')
                 system2(
                     'cp res/teamdesk.desktop tmpdeb/usr/share/applications/teamdesk.desktop')
                 system2(

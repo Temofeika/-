@@ -30,6 +30,6 @@ package() {
   install -Dm 644 $HBB/res/teamdesk.service -t "${pkgdir}/usr/share/teamdesk/files"
   install -Dm 644 $HBB/res/teamdesk.desktop -t "${pkgdir}/usr/share/teamdesk/files"
   install -Dm 644 $HBB/res/teamdesk-link.desktop -t "${pkgdir}/usr/share/teamdesk/files"
-  install -Dm 644 $HBB/res/128x128@2x.png "${pkgdir}/usr/share/icons/hicolor/256x256/apps/teamdesk.png"
-  install -Dm 644 $HBB/res/scalable.svg "${pkgdir}/usr/share/icons/hicolor/scalable/apps/teamdesk.svg"
+  install -Dm 644 $HBB/res/teamdesk.png "${pkgdir}/usr/share/icons/hicolor/256x256/apps/teamdesk.png"
+  install -Dm 644 $HBB/res/teamdesk.svg "${pkgdir}/usr/share/icons/hicolor/scalable/apps/teamdesk.svg"
 }
